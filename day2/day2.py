@@ -40,6 +40,19 @@ def check_range(rule, pwd):
     else:
         return 0
 
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_positions(rule, pwd):
+    (p1, p2, c) = rule
+    if ((pwd[(p1 - 1)] == c) and not (pwd[(p2 - 1)] == c)) or \
+        ((pwd[(p2 - 1)] == c) and not (pwd[(p1 - 1)] == c)):
+        return 1
+    else:
+        return 0
+
+
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
 def problem1(my_sum):
@@ -62,6 +75,14 @@ def problem1(my_sum):
 def problem2(my_sum):
     print("Problem 2")
     print("---------")
+    my_input = get_input("day2_input.txt")
+    my_r_p = parse_input(my_input)
+
+    valid = 0
+    for (rule, pwd) in my_r_p:
+        valid += check_positions(rule, pwd)
+
+    print("The number of valid passwords: %d" % (valid))
     print("")
 
 
