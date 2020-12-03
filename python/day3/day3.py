@@ -67,7 +67,23 @@ def problem2(filename):
     print("Problem 2")
     print("---------")
 
-    my_input = get_input(filename)
+    my_forest = get_input(filename)
+
+    trees1 = count_trees(my_forest, 1, 1)
+    trees2 = count_trees(my_forest, 3, 1)
+    trees3 = count_trees(my_forest, 5, 1)
+    trees4 = count_trees(my_forest, 7, 1)
+    trees5 = count_trees(my_forest, 1, 2)
+
+    trees_prod = trees1 * trees2 * trees3 * trees4 * trees5
+
+    print("Number of trees encountered in slope 1: %d" % (trees1))
+    print("Number of trees encountered in slope 2: %d" % (trees2))
+    print("Number of trees encountered in slope 3: %d" % (trees3))
+    print("Number of trees encountered in slope 4: %d" % (trees4))
+    print("Number of trees encountered in slope 5: %d" % (trees5))
+
+    print("The product of all trees: %d" % (trees_prod))
 
     print("")
 
