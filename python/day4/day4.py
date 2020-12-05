@@ -24,11 +24,34 @@ def get_input(filename):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
+def get_tickets(filename):
+    print("Getting tickets from the input file %s" % filename)
+
+    tickets = []
+    my_input = get_input(filename)
+    ticket = ""
+
+    for line in my_input:
+        if len(line) > 0:
+            ticket += line + " "
+        else:
+            tickets.append((ticket.split(" ")[:-1]))
+            ticket = ""
+
+    # Include the final ticket.
+    tickets.append((ticket.split(" ")[:-1]))
+    return tickets
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
 def problem1(filename):
     print("Problem 1")
     print("---------")
 
-    my_input = get_input(filename)
+    tickets = get_tickets(filename)
+    for ticket in tickets:
+        print(ticket)
     print("")
 
 
@@ -46,7 +69,7 @@ if __name__=="__main__":
     print("Advent of Code 2020, day 4")
     print("==========================")
 
-    problem1("day4_input.txt")
+    problem1("day4_example.txt")
 
     problem2("day4_input.txt")
 
