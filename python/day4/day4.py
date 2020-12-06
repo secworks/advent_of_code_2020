@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #=======================================================================
 #
-# day3.py
+# day4.py
 # -------
 # Solutions to Advent of Code 2020, day 4.
 # https://adventofcode.com/2020/day/4
