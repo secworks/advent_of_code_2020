@@ -49,9 +49,19 @@ def problem1(filename):
     print("Problem 1")
     print("---------")
 
-    tickets = get_groups(filename)
-    for ticket in tickets:
-        print(ticket)
+    answer_sum = 0
+
+    groups = get_groups(filename)
+
+    for group in groups:
+        answers = set()
+        for person in group:
+            for answer in person:
+                answers.add(answer)
+        print("Different answers in group: %s" % (len(answers)))
+        answer_sum += len(answers)
+
+    print("Total number of answers: %d" % (answer_sum))
     print("")
 
 
@@ -60,6 +70,22 @@ def problem1(filename):
 def problem2(filename):
     print("Problem 2")
     print("---------")
+
+    answer_sum = 0
+
+    groups = get_groups(filename)
+
+    for group in groups:
+        gset = []
+        for person in group:
+            pset = set()
+            for answer in person:
+                pset.add(answer)
+            gset.append(pset)
+        # The cool thing here is the "*gset" iterable.
+        answer_sum += len(set.intersection(*gset))
+
+    print("Total number of answers: %d" % (answer_sum))
     print("")
 
 
@@ -69,9 +95,9 @@ if __name__=="__main__":
     print("Advent of Code 2020, day 6")
     print("==========================")
 
-    problem1("day6_example.txt")
+    problem1("day6_input.txt")
 
-    problem2("day4_input.txt")
+    problem2("day6_input.txt")
 
     sys.exit(0)
 
