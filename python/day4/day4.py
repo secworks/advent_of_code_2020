@@ -65,8 +65,8 @@ def check_all_fields_or_no_cid(d):
     if ((len(d.keys()) == 8) or
         ((len(d.keys()) == 7) and "cid" not in d)):
         return True
-    else:
-        return False
+    return False
+
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
@@ -74,8 +74,8 @@ def check_birth_year(d):
     if 'byr' in d.keys() and \
       (int(d['byr']) >= 1920) and (int(d['byr']) <= 2002):
         return True
-    else:
-        return False
+    return False
+
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
@@ -83,8 +83,8 @@ def check_issue_year(d):
     if 'iyr' in d.keys() and \
       (int(d['iyr']) >= 2010) and (int(d['iyr']) <= 2020):
         return True
-    else:
-        return False
+    return False
+
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
@@ -92,8 +92,60 @@ def check_expiry_year(d):
     if 'eyr' in d.keys() and \
       (int(d['eyr']) >= 2020) and (int(d['eyr']) <= 2030):
         return True
-    else:
-        return False
+    return False
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_height(d):
+    if 'hgt' in d.keys():
+        if "cm" in d['hgt']:
+            if((int(d['hgt'][:-2]) >= 150) and (int(d['hgt'][:-2]) <= 193)):
+                return True
+
+        elif "in" in d['hgt']:
+            if((int(d['hgt'][:-2]) >= 59) and (int(d['hgt'][:-2]) <= 76)):
+                return True
+    return False
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_hair_color(d):
+    c = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
+         '9', 'a', 'b', 'c', 'd', 'e', 'f'}
+
+    if 'hcl' in d.keys():
+        if len(d['hcl']) == 7 and \
+          d['hcl'][0] == '#' and \
+          d['hcl'][1] in c and \
+          d['hcl'][2] in c and \
+          d['hcl'][3] in c and \
+          d['hcl'][4] in c and \
+          d['hcl'][5] in c and \
+          d['hcl'][6] in c:
+          return True
+    return False
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_eye_color(d):
+    colors = {'amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'}
+
+    if 'ecl' in d.keys():
+        if d['ecl'] in colors:
+            return True
+    return False
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_passport_id(d):
+    if 'pid' in d.keys():
+        if len(d['pid']) and d['pid'].isdecimal():
+            return True
+    return False
 
 
 #-------------------------------------------------------------------
@@ -127,18 +179,17 @@ def problem2(filename):
     valid = 0
     for d in db:
         if check_all_fields_or_no_cid(d) and \
-          check_birth_year(d) and \
-          check_issue_year(d) and \
-          check_issue_year(d):
-
+          check_birth_year(d)            and \
+          check_issue_year(d)            and \
+          check_issue_year(d)            and \
+          check_height(d)                and \
+          check_hair_color(d)            and \
+          check_eye_color(d)             and \
+          check_passport_id(d):
             valid += 1
 
     print("Number of valid tickets: %d" % (valid))
     print("")
-
-    print("")
-
-
 
 
 #-------------------------------------------------------------------
@@ -149,7 +200,7 @@ if __name__=="__main__":
 
     problem1("day4_input.txt")
 
-    problem2("day4_example.txt")
+    problem2("day4_input.txt")
 
     sys.exit(0)
 
