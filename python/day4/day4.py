@@ -61,6 +61,43 @@ def get_db(tickets):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
+def check_all_fields_or_no_cid(d):
+    if ((len(d.keys()) == 8) or
+        ((len(d.keys()) == 7) and "cid" not in d)):
+        return True
+    else:
+        return False
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_birth_year(d):
+    if 'byr' in d.keys() and \
+      (int(d['byr']) >= 1920) and (int(d['byr']) <= 2002):
+        return True
+    else:
+        return False
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_issue_year(d):
+    if 'iyr' in d.keys() and \
+      (int(d['iyr']) >= 2010) and (int(d['iyr']) <= 2020):
+        return True
+    else:
+        return False
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def check_expiry_year(d):
+    if 'eyr' in d.keys() and \
+      (int(d['eyr']) >= 2020) and (int(d['eyr']) <= 2030):
+        return True
+    else:
+        return False
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
 def problem1(filename):
     print("Problem 1")
     print("---------")
@@ -71,8 +108,7 @@ def problem1(filename):
 
     valid = 0
     for d in db:
-        if ((len(d.keys()) == 8) or
-            ((len(d.keys()) == 7) and "cid" not in d)):
+        if check_all_fields_or_no_cid(d):
             valid += 1
     print("Number of valid tickets: %d" % (valid))
     print("")
@@ -80,32 +116,29 @@ def problem1(filename):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
-def check_passport(d):
-    if (len(pdb.keys) < 7):
-        return 0
-
-    if ((len(d.keys()) == 7) and "cid" in d):
-        return 0
-
-    if (d['byr'] < 1920) or (d['byr'] > 2002):
-        return 0
-
-    if (d['iyr'] < 2010) or (d['iyr'] > 2020):
-        return 0
-
-    if (d['eyr'] < 2020) or (d['eyr'] > 2030):
-        return 0
-
-    if (d['eyr'] < 2020) or (d['eyr'] > 2030):
-        return 0
-
-
-#-------------------------------------------------------------------
-#-------------------------------------------------------------------
 def problem2(filename):
     print("Problem 2")
     print("---------")
+
+    # Get tickets and parse into a list of dicts.
+    tickets = get_tickets(filename)
+    db = get_db(tickets)
+
+    valid = 0
+    for d in db:
+        if check_all_fields_or_no_cid(d) and \
+          check_birth_year(d) and \
+          check_issue_year(d) and \
+          check_issue_year(d):
+
+            valid += 1
+
+    print("Number of valid tickets: %d" % (valid))
     print("")
+
+    print("")
+
+
 
 
 #-------------------------------------------------------------------
