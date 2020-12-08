@@ -90,7 +90,7 @@ def check_issue_year(d):
 #-------------------------------------------------------------------
 def check_expiry_year(d):
     if 'eyr' in d.keys() and \
-      (int(d['eyr']) >= 2020) and (int(d['eyr']) <= 2030):
+      ((int(d['eyr']) > 2019) and (int(d['eyr']) < 2031)):
         return True
     return False
 
@@ -144,7 +144,6 @@ def check_eye_color(d):
 def check_passport_id(d):
     if 'pid' in d.keys():
         if len(d['pid']) == 9 and d['pid'].isdecimal():
-            print("Valid pid: %s" % (d['pid']))
             return True
     return False
 
@@ -182,12 +181,13 @@ def problem2(filename):
         if check_all_fields_or_no_cid(d) and \
           check_birth_year(d)            and \
           check_issue_year(d)            and \
-          check_issue_year(d)            and \
+          check_expiry_year(d)           and \
           check_height(d)                and \
           check_hair_color(d)            and \
           check_eye_color(d)             and \
           check_passport_id(d):
             valid += 1
+            print("Valid! eyr: %s" % d['eyr'])
 
     print("Number of valid tickets: %d" % (valid))
     print("")
