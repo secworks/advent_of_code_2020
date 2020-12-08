@@ -187,7 +187,6 @@ def problem2(filename):
           check_eye_color(d)             and \
           check_passport_id(d):
             valid += 1
-            print("Valid! eyr: %s" % d['eyr'])
 
     print("Number of valid tickets: %d" % (valid))
     print("")
