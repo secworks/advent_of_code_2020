@@ -143,7 +143,8 @@ def check_eye_color(d):
 #-------------------------------------------------------------------
 def check_passport_id(d):
     if 'pid' in d.keys():
-        if len(d['pid']) and d['pid'].isdecimal():
+        if len(d['pid']) == 9 and d['pid'].isdecimal():
+            print("Valid pid: %s" % (d['pid']))
             return True
     return False
 
