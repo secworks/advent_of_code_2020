@@ -24,13 +24,14 @@ def get_input(filename):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
-def get_rules(filename):
+def get_bags(filename):
 
     raw_rules = get_input(filename)
 
     for r in raw_rules:
-        (res,  inputs) = r.split("contain")
-        print(res, ":", inputs)
+        (target,  source) = r.split("bags contain")
+        sources = source.split(",")
+        print(target, "contain", sources)
 
 
 #-------------------------------------------------------------------
@@ -39,7 +40,7 @@ def problem1(filename):
     print("Problem 1")
     print("---------")
 
-    rules = get_rules(filename)
+    bags = get_bags(filename)
 
     print("")
 
@@ -58,7 +59,7 @@ if __name__=="__main__":
     print("Advent of Code 2020, day 7")
     print("==========================")
 
-    problem1("day7_example.txt")
+    problem1("day7_input.txt")
 
     problem2("day7_input.txt")
 
