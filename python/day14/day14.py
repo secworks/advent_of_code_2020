@@ -54,6 +54,64 @@ def get_instructions(filename):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
+def num_x(mask):
+    s = 0
+    for i in range(len(mask)):
+        if mask[i] == "X":
+            s += 1
+    return s
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def new_mask(mask, b):
+    r = ""
+    bp = 0
+    for i in range(len(mask)):
+        if mask[i] == "X":
+            r += b[bp]
+            bp += 1
+        else:
+            r += mask[i]
+    return r
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def masked_addr(mask, addr):
+    res = ""
+    for i in range(len(mask)):
+        if mask[i] == '0':
+            res += addr[i]
+
+        if mask[i] == '1':
+            res += '1'
+    return res
+
+#-------------------------------------------------------------------
+# Given a mask and a base address return all possible addresses.
+#-------------------------------------------------------------------
+def decode_addr(mask, addr):
+    xs = num_x(mask)
+    bs = []
+    al = []
+
+    # Create set of bit patterns
+    for i in range((2 ** xs)):
+        bs.append(format(i, 'b').zfill(xs))
+
+    # For each bit patten get new mask.
+    # Then use the mask to ceate a final address.
+    for b in bs:
+        nm = new_mask(mask, b)
+        oa = format(addr, 'b').zfill(len(mask))
+        ma = masked_addr(nm, oa)
+        al.append(ma)
+
+    return al
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
 def masked_update(mask, curr, data):
     cs = format(curr, 'b').zfill(len(mask))
     ds = format(data, 'b').zfill(len(mask))
@@ -100,7 +158,6 @@ def sum_memory(mem):
         s += mem[a]
     return s
 
-
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
 def problem1(filename):
@@ -119,6 +176,22 @@ def problem1(filename):
 def problem2(filename):
     print("Problem 2")
     print("---------")
+    iset = get_instructions(filename)
+
+    wa = 0
+    num_addrs = 0
+    for instr in iset:
+        for i in instr:
+            if i[0] == "set_mask":
+                curr_mask = i[1]
+
+            if i[0] == "write_mem":
+                wa += 1
+                (cmd, addr, data) = i
+                al = decode_addr(curr_mask, addr)
+                num_addrs += len(al)
+    print("Original num: %d" % (wa))
+    print("Total number of addresses: %d" % (num_addrs))
     print("")
 
 
