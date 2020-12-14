@@ -55,7 +55,20 @@ def get_instructions(filename):
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
 def masked_update(mask, curr, data):
-    return 42
+    cs = format(curr, 'b').zfill(len(mask))
+    ds = format(data, 'b').zfill(len(mask))
+
+    us = ""
+    for i in range(len(mask)):
+        if mask[i] == 'X':
+            us += ds[i]
+
+        if mask[i] == '1':
+            us += '1'
+
+        if mask[i] == '0':
+            us += '0'
+    return int(us, 2)
 
 
 #-------------------------------------------------------------------
@@ -81,13 +94,23 @@ def execute_instructions(iset):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
+def sum_memory(mem):
+    s = 0
+    for a in mem:
+        s += mem[a]
+    return s
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
 def problem1(filename):
     print("Problem 1")
     print("---------")
 
     iset = get_instructions(filename)
     mem = execute_instructions(iset)
-    print(mem)
+    msum = sum_memory(mem)
+    print("Total sum: %d" % msum)
     print("")
 
 
