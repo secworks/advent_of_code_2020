@@ -51,6 +51,34 @@ def get_instructions(filename):
     iset.append(instr)
     return iset
 
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def masked_update(mask, curr, data):
+    return 42
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def execute_instructions(iset):
+    mem = {}
+    curr_mask = ""
+    for instr in iset:
+        for i in instr:
+            if i[0] == "set_mask":
+                curr_mask = i[1]
+
+            if i[0] == "write_mem":
+                (cmd, addr, data) = i
+                if addr in mem:
+                    curr_value = mem[addr]
+                else:
+                    curr_value = 0
+
+                mem[addr] = masked_update(curr_mask, curr_value, data)
+    return mem
+
+
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
 def problem1(filename):
@@ -58,8 +86,8 @@ def problem1(filename):
     print("---------")
 
     iset = get_instructions(filename)
-    for i in iset:
-        print(i, "\n")
+    mem = execute_instructions(iset)
+    print(mem)
     print("")
 
 
