@@ -1,0 +1,87 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#=======================================================================
+#
+# day14.py
+# --------
+# Solutions to Advent of Code 2020, day 14.
+# https://adventofcode.com/2020/day/14
+#
+#
+#=======================================================================
+
+import sys
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def get_input(filename):
+    l = []
+    with open(filename,'r') as f:
+        for line in f:
+            l.append(line.strip())
+    return l
+
+
+#-------------------------------------------------------------------
+# Extract write instructions ans associated mask from the
+# input file.
+#-------------------------------------------------------------------
+def get_instructions(filename):
+    iset = []
+    raw = get_input(filename)
+    instr = []
+    for l in raw:
+        if "mask" in l:
+            # New set of instructions.
+            # If not first add previous instr.
+            if instr != []:
+                iset.append(instr)
+
+            # Start new instruction list for the given mask.
+            instr = [("set_mask", l.split("=")[1][1:])]
+
+        else:
+            # Extract the actual mem operations.
+            addr = int(l.split("=")[0][4:-2])
+            data = int(l.split("=")[1])
+            instr.append(("write_mem", addr, data))
+
+    # Add final inst.
+    iset.append(instr)
+    return iset
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def problem1(filename):
+    print("Problem 1")
+    print("---------")
+
+    iset = get_instructions(filename)
+    for i in iset:
+        print(i, "\n")
+    print("")
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def problem2(filename):
+    print("Problem 2")
+    print("---------")
+    print("")
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+if __name__=="__main__":
+    print("Advent of Code 2020, day 14")
+    print("===========================")
+
+    problem1("day14_input.txt")
+
+    problem2("day14_input.txt")
+
+    sys.exit(0)
+
+#=======================================================================
+#=======================================================================
