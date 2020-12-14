@@ -35,17 +35,6 @@ def get_code(filename):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
-def problem1(filename):
-    print("Problem 1")
-    print("---------")
-
-    code = get_code(filename)
-    print(code)
-    print("")
-
-
-#-------------------------------------------------------------------
-#-------------------------------------------------------------------
 def find_loop(code):
     acc = 0
     pc = 0
@@ -83,14 +72,69 @@ def find_loop(code):
 
 #-------------------------------------------------------------------
 #-------------------------------------------------------------------
-def problem2(filename):
-    print("Problem 2")
+def find_bug(code):
+    acc = 0
+    pc = 0
+    icnt = 0
+
+    final_addr = len(code) - 1
+
+    while True:
+        (op, sign, operand, visited) = code[pc]
+        print(icnt, pc, acc, code[pc])
+
+        if op == "acc":
+            icnt += 1
+            pc += 1
+            if sign == "+":
+                acc += operand
+            else:
+                acc -= operand
+
+
+        if op == "jmp":
+            icnt += 1
+
+            if pc == final_addr:
+                return (icnt, acc, (op, sign, operand))
+
+            if sign == "+":
+                pc = pc + operand
+            else:
+                pc = pc - operand
+
+
+        if op == "nop":
+            if pc + operand == final_addr:
+                return (icnt, acc, (op, sign, operand))
+
+            icnt += 1
+            pc += 1
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def problem1(filename):
+    print("Problem 1")
     print("---------")
 
     code = get_code(filename)
     (icnt, acc, instr) = find_loop(code)
     print("Loop detected after %d instructions. Acc: %d" % (icnt, acc))
     print("Instruction where loop occurs:", instr)
+    print("")
+
+
+#-------------------------------------------------------------------
+#-------------------------------------------------------------------
+def problem2(filename):
+    print("Problem 2")
+    print("---------")
+
+    code = get_code(filename)
+    (icnt, acc, instr) = find_bug(code)
+    print("Bug detected detected after %d instructions. Acc: %d" % (icnt, acc))
+    print("Instruction which is buggy:", instr)
     print("")
 
 
