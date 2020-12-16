@@ -24,10 +24,28 @@ def get_input(filename):
 
 
 #-------------------------------------------------------------------
+# Extract nearby tickets.
+#-------------------------------------------------------------------
+def get_nearby_tickets(raw):
+    tickets = []
+    found_tickets = False
+
+    for l in raw:
+        if found_tickets:
+            tickets.append(l)
+        if "nearby tickets:" in l:
+            found_tickets = True
+    return tickets
+
+
+#-------------------------------------------------------------------
 #-------------------------------------------------------------------
 def problem1(filename):
     print("Problem 1")
     print("---------")
+    raw = get_input(filename)
+    nearby_tickets = get_nearby_tickets(raw)
+    print(nearby_tickets)
     print("")
 
 
